@@ -8,9 +8,9 @@ fi
 
 commit_message="$1"
 
-# Execute git commit with the specified message and capture the output into a variable
-commit_output=$(git commit -m "$commit_message" 2>&1)
+# Use echo to pipe the commit message directly into git commit
+commit_output=$(echo "$commit_message" | git commit -F - 2>&1)
 
 # Pass the commit output directly to the Go program as an argument
-/path/to/your/go/program "$commit_output"
+# /path/to/your/go/program "$commit_output"
 
