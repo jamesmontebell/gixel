@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "in"
 # Check if exactly two arguments are provided
 if [ "$#" -ne 2 ]; then
     echo "Usage: $0 -m <message>"
