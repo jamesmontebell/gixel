@@ -5,4 +5,5 @@ commit_message="${@: -1}"  # Get the last argument, which is assumed to be the c
 
 # Call the actual git commit with the provided message
 output=$(git commit -m "$commit_message")
+echo "test"
 echo $output
