@@ -7,3 +7,5 @@ commit_message="${@: -1}"  # Get the last argument, which is assumed to be the c
 output=$(git commit -m "$commit_message")
 
 echo $output
+
+echo "ran in script"
