@@ -9,5 +9,15 @@ fi
 # Read the input provided
 commit_message="$1"
 
-git commit -m "$commit_message"
-exit 
+# Set the output of commit to a variable
+commit_output=$(git commit -m "$commit_message" 2>&1)
+
+# Check the exit status of the git commit command
+if [ $? -eq 0 ]; then
+    echo "Commit successful"
+else
+    echo "Commit failed"
+fi
+
+echo "$commit_output"
+exit 0
