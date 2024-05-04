@@ -14,3 +14,4 @@ commit_output=$(echo "$commit_message" | git commit -F - 2>&1)
 # Pass the commit output directly to the Go program as an argument
 # /path/to/your/go/program "$commit_output"
 
+echo $commit_output
