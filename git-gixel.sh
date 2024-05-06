@@ -12,6 +12,8 @@ commit_message="$1"
 # Set the output of commit to a variable
 commit_output=$(git commit -m "$commit_message" 2>&1)
 
+echo "$commit_output"
+
 # Check the exit status of the git commit command
 if [ $? -eq 0 ]; then
     echo "Commit successful"
@@ -19,5 +21,11 @@ else
     echo "Commit failed"
 fi
 
-echo "$commit_output"
+
+# Delete spaces and whitespace from string
+commit_output="${commit_output//[[:space:]]/}"
+
+# Run go TUI program with git commit output
+go run /Users/jamesmontebell/Github/gixel/terminal/terminal.go $commit_output
+
 exit 0
