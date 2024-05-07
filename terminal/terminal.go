@@ -28,17 +28,13 @@ func main() {
 
 	fmt.Println(args)
 
-	changes, err := strconv.Atoi(args[FindFilesChanged(args)-1 : FindFilesChanged(args)])
+	changes := findFilesChanged(args)
+	insertions, err := strconv.Atoi(args[findInsertions(args)-1 : findInsertions(args)])
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
-	insertions, err := strconv.Atoi(args[FindInsertions(args)-1 : FindInsertions(args)])
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	deletions, err := strconv.Atoi(args[FindDeletions(args)-1 : FindDeletions(args)])
+	deletions, err := strconv.Atoi(args[findDeletions(args)-1 : findDeletions(args)])
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
@@ -51,18 +47,32 @@ func main() {
 	fmt.Print(output)
 }
 
-func FindFilesChanged(s string) int {
+func convertToNumeric(s string) int {
+	num, err := strconv.Atoi(s)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return 0
+	}
+	return num
+}
+
+func findFilesChanged(s string) int {
 	fileChangedString := "filechanged"
 	filesChangedString := "fileschanged"
 
+	var num string
+
 	if strings.Contains(s, fileChangedString) {
-		return strings.Index(s, fileChangedString)
+		num += string(s[strings.Index(s, fileChangedString)-1])
+		return convertToNumeric(num)
 	} else {
-		return strings.Index(s, filesChangedString)
+		num += string(s[strings.Index(s, filesChangedString)-2])
+		num += string(s[strings.Index(s, filesChangedString)-1])
+		return convertToNumeric(num)
 	}
 }
 
-func FindInsertions(s string) int {
+func findInsertions(s string) int {
 	insertionString := "insertion"
 	insertionsString := "insertions"
 
@@ -73,7 +83,7 @@ func FindInsertions(s string) int {
 	}
 }
 
-func FindDeletions(s string) int {
+func findDeletions(s string) int {
 	deletionString := "deletion"
 	deletionsString := "deletions"
 
