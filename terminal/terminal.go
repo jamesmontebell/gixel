@@ -47,6 +47,11 @@ func main() {
 	fmt.Print(output)
 }
 
+func isNumeric(s string) bool {
+	_, err := strconv.Atoi(s)
+	return err == nil
+}
+
 func convertToNumeric(s string) int {
 	num, err := strconv.Atoi(s)
 	if err != nil {
@@ -66,6 +71,9 @@ func findFilesChanged(s string) int {
 		num += string(s[strings.Index(s, fileChangedString)-1])
 		return convertToNumeric(num)
 	} else {
+		if isNumeric(string(s[strings.Index(s, filesChangedString)-3])) {
+			num += string(s[strings.Index(s, filesChangedString)-3])
+		}
 		num += string(s[strings.Index(s, filesChangedString)-2])
 		num += string(s[strings.Index(s, filesChangedString)-1])
 		return convertToNumeric(num)
