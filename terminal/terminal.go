@@ -27,6 +27,8 @@ func main() {
 		args += os.Args[i]
 	}
 
+	fmt.Println(args)
+
 	changes, err := findFilesChanged(args)
 	if err != nil {
 		fmt.Println("Error occurred:", err)
@@ -76,7 +78,9 @@ func findFilesChanged(s string) (int, error) {
 		if isNumeric(string(s[strings.Index(s, filesChangedString)-3])) {
 			num += string(s[strings.Index(s, filesChangedString)-3])
 		}
-		num += string(s[strings.Index(s, filesChangedString)-2])
+		if isNumeric(string(s[strings.Index(s, filesChangedString)-2])) {
+			num += string(s[strings.Index(s, filesChangedString)-2])
+		}
 		num += string(s[strings.Index(s, filesChangedString)-1])
 		return convertToNumeric(num), nil
 	}
@@ -96,7 +100,9 @@ func findInsertions(s string) (int, error) {
 		if isNumeric(string(s[strings.Index(s, insertionsString)-3])) {
 			num += string(s[strings.Index(s, insertionsString)-3])
 		}
-		num += string(s[strings.Index(s, insertionsString)-2])
+		if isNumeric(string(s[strings.Index(s, insertionsString)-2])) {
+			num += string(s[strings.Index(s, insertionsString)-2])
+		}
 		num += string(s[strings.Index(s, insertionsString)-1])
 		return convertToNumeric(num), nil
 	}
@@ -115,7 +121,9 @@ func findDeletions(s string) (int, error) {
 		if isNumeric(string(s[strings.Index(s, deletionsString)-3])) {
 			num += string(s[strings.Index(s, deletionsString)-3])
 		}
-		num += string(s[strings.Index(s, deletionsString)-2])
+		if isNumeric(string(s[strings.Index(s, deletionsString)-2])) {
+			num += string(s[strings.Index(s, deletionsString)-2])
+		}
 		num += string(s[strings.Index(s, deletionsString)-1])
 		return convertToNumeric(num), nil
 	}
