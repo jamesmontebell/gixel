@@ -88,7 +88,7 @@ func findFilesChanged(s string) (int, error) {
 }
 
 func findInsertions(s string) (int, error) {
-	insertionString := "insertion"
+	insertionString := "insertion("
 	insertionsString := "insertions"
 
 	var num string
@@ -110,7 +110,7 @@ func findInsertions(s string) (int, error) {
 }
 
 func findDeletions(s string) (int, error) {
-	deletionString := "deletion"
+	deletionString := "deletion("
 	deletionsString := "deletions"
 	var num string
 
