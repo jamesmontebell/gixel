@@ -57,6 +57,9 @@ func findInsertions(s string) (int, error) {
 		num += string(s[strings.Index(s, insertionString)-1])
 		return convertToNumeric(num), nil
 	} else if strings.Contains(s, insertionsString) {
+		if isNumeric(string(s[strings.Index(s, insertionsString)-5])) {
+			num += string(s[strings.Index(s, insertionsString)-5])
+		}
 		if isNumeric(string(s[strings.Index(s, insertionsString)-4])) {
 			num += string(s[strings.Index(s, insertionsString)-4])
 		}
