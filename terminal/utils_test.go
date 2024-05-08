@@ -6,7 +6,6 @@ import (
 )
 
 func TestFindFilesChanged(t *testing.T) {
-
 	testCases := TestCases{
 		{Input: "[main93b2f56]parser123fileschanged,22insertions(+),1deletion(-)", Expected: 123},
 		{Input: "[main93b2f56]parser12fileschanged,22insertions(+),1deletion(-)", Expected: 12},
