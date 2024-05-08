@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+	// Program needs a git commmit output
 	if len(os.Args) < 2 {
 		fmt.Println("No arguments")
 		os.Exit(1)
@@ -14,25 +15,28 @@ func main() {
 	var output Outputs
 	var args string
 
-	for i := 1; i < len(os.Args); i++ {
-		args += os.Args[i]
-	}
+	// Save arguements into a variable
+	args += os.Args[1]
 
+	// Save the number of changes made into a variable
 	changes, err := findFilesChanged(args)
 	if err != nil {
 		fmt.Println("Error occurred:", err)
 	}
 
+	// Save the number of insertions made into a variable
 	insertions, err := findInsertions(args)
 	if err != nil {
 		fmt.Println("Error occurred:", err)
 	}
 
+	// Save the number of deletions made into a variable
 	deletions, err := findDeletions(args)
 	if err != nil {
 		fmt.Println("Error occurred:", err)
 	}
 
+	// Add these variables into Output object
 	output.Changes = changes
 	output.Inserts = insertions
 	output.Deletions = deletions
