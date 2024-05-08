@@ -1,5 +1,5 @@
 #!/bin/bash
 
-git config --global alias.gixel "!bash /your/path/to/git-gixel.sh"
+git config --global alias.gixel "!bash ./git-gixel.sh"
 
 exit

@@ -33,7 +33,7 @@ fi
 commit_output="${commit_output//[[:space:]]/}"
 
 # Run go TUI program with git commit output
-cd /Users/jamesmontebell/Github/gixel/terminal
+cd ./terminal
 go run terminal.go types.go utils.go $commit_output
 
 exit 0
