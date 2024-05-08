@@ -6,6 +6,7 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
+# Check if commit message ends in a number
 last_char="${1: -1}"
 if [[ "$last_char" =~ [0-9] ]]; then
     echo "Please don't end commit message with a number."

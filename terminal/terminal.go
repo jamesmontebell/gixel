@@ -51,11 +51,13 @@ func main() {
 	fmt.Print(output)
 }
 
+// Check if a string is a number
 func isNumeric(s string) bool {
 	_, err := strconv.Atoi(s)
 	return err == nil
 }
 
+// Convert a string number to an integer
 func convertToNumeric(s string) int {
 	num, err := strconv.Atoi(s)
 	if err != nil {
@@ -65,6 +67,7 @@ func convertToNumeric(s string) int {
 	return num
 }
 
+// Find the number of files changed in git commit output
 func findFilesChanged(s string) (int, error) {
 	fileChangedString := "filechanged"
 	filesChangedString := "fileschanged"
@@ -87,6 +90,7 @@ func findFilesChanged(s string) (int, error) {
 	return 0, errors.New("files changed error")
 }
 
+// Find the number of insertions added in git commit output
 func findInsertions(s string) (int, error) {
 	insertionString := "insertion("
 	insertionsString := "insertions"
@@ -109,6 +113,7 @@ func findInsertions(s string) (int, error) {
 	return 0, errors.New("no insertion")
 }
 
+// Find the number of deletions in git commit output
 func findDeletions(s string) (int, error) {
 	deletionString := "deletion("
 	deletionsString := "deletions"
