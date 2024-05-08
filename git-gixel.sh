@@ -2,7 +2,13 @@
 
 # Check if there are any command line arguments
 if [ $# -eq 0 ]; then
-    echo "Please provide a commit message"
+    echo "Please provide a commit message."
+    exit 1
+fi
+
+last_char="${1: -1}"
+if [[ "$last_char" =~ [0-9] ]]; then
+    echo "Please don't end commit message with a number."
     exit 1
 fi
 

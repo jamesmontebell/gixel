@@ -1,22 +1,23 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
 )
 
+type Outputs struct {
+	Changes   int
+	Inserts   int
+	Deletions int
+}
+
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("No arguments")
 		os.Exit(1)
-	}
-
-	type Outputs struct {
-		Changes   int
-		Inserts   int
-		Deletions int
 	}
 
 	var output Outputs
@@ -26,18 +27,19 @@ func main() {
 		args += os.Args[i]
 	}
 
-	fmt.Println(args)
-
-	changes := findFilesChanged(args)
-	insertions, err := strconv.Atoi(args[findInsertions(args)-1 : findInsertions(args)])
+	changes, err := findFilesChanged(args)
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		fmt.Println("Error occurred:", err)
 	}
-	deletions, err := strconv.Atoi(args[findDeletions(args)-1 : findDeletions(args)])
+
+	insertions, err := findInsertions(args)
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		fmt.Println("Error occurred:", err)
+	}
+
+	deletions, err := findDeletions(args)
+	if err != nil {
+		fmt.Println("Error occurred:", err)
 	}
 
 	output.Changes = changes
@@ -61,7 +63,7 @@ func convertToNumeric(s string) int {
 	return num
 }
 
-func findFilesChanged(s string) int {
+func findFilesChanged(s string) (int, error) {
 	fileChangedString := "filechanged"
 	filesChangedString := "fileschanged"
 
@@ -69,35 +71,53 @@ func findFilesChanged(s string) int {
 
 	if strings.Contains(s, fileChangedString) {
 		num += string(s[strings.Index(s, fileChangedString)-1])
-		return convertToNumeric(num)
-	} else {
+		return convertToNumeric(num), nil
+	} else if strings.Contains(s, filesChangedString) {
 		if isNumeric(string(s[strings.Index(s, filesChangedString)-3])) {
 			num += string(s[strings.Index(s, filesChangedString)-3])
 		}
 		num += string(s[strings.Index(s, filesChangedString)-2])
 		num += string(s[strings.Index(s, filesChangedString)-1])
-		return convertToNumeric(num)
+		return convertToNumeric(num), nil
 	}
+	return 0, errors.New("files changed error")
 }
 
-func findInsertions(s string) int {
+func findInsertions(s string) (int, error) {
 	insertionString := "insertion"
 	insertionsString := "insertions"
 
+	var num string
+
 	if strings.Contains(s, insertionString) {
-		return strings.Index(s, insertionString)
-	} else {
-		return strings.Index(s, insertionsString)
+		num += string(s[strings.Index(s, insertionString)-1])
+		return convertToNumeric(num), nil
+	} else if strings.Contains(s, insertionsString) {
+		if isNumeric(string(s[strings.Index(s, insertionsString)-3])) {
+			num += string(s[strings.Index(s, insertionsString)-3])
+		}
+		num += string(s[strings.Index(s, insertionsString)-2])
+		num += string(s[strings.Index(s, insertionsString)-1])
+		return convertToNumeric(num), nil
 	}
+	return 0, errors.New("no insertion")
 }
 
-func findDeletions(s string) int {
+func findDeletions(s string) (int, error) {
 	deletionString := "deletion"
 	deletionsString := "deletions"
+	var num string
 
 	if strings.Contains(s, deletionString) {
-		return strings.Index(s, deletionString)
-	} else {
-		return strings.Index(s, deletionsString)
+		num += string(s[strings.Index(s, deletionString)-1])
+		return convertToNumeric(num), nil
+	} else if strings.Contains(s, deletionsString) {
+		if isNumeric(string(s[strings.Index(s, deletionsString)-3])) {
+			num += string(s[strings.Index(s, deletionsString)-3])
+		}
+		num += string(s[strings.Index(s, deletionsString)-2])
+		num += string(s[strings.Index(s, deletionsString)-1])
+		return convertToNumeric(num), nil
 	}
+	return 0, errors.New("no deletions")
 }
