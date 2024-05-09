@@ -29,11 +29,13 @@ else
 fi
 
 
-# Delete spaces and whitespace from string
+# Delete spaces and whitespace from string and last two characters because
+# interprets .go at the end of some commits as input to go run
 commit_output="${commit_output//[[:space:]]/}"
+dropped=$(echo "$commit_output" | sed 's/..$//')
 
 # Run go TUI program with git commit output
 cd ./terminal
-go run terminal.go types.go utils.go $commit_output
+go run terminal.go types.go utils.go $dropped
 
 exit 0
