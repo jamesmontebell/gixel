@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+const (
+	filesExpMult     = 50
+	insertsExpMult   = 50
+	deletionsExpMult = 50
+)
+
 // Check if a string is a number
 func isNumeric(s string) bool {
 	_, err := strconv.Atoi(s)
@@ -98,4 +104,9 @@ func findDeletions(s string) (int, error) {
 		return convertToNumeric(num), nil
 	}
 	return 0, errors.New("no deletions")
+}
+
+// Take parsed git commit output numbers and calculate an experience amount
+func calculateExp(parsedOutputs ParsedOutputs) int {
+	return parsedOutputs.Changes*filesExpMult + parsedOutputs.Inserts*insertsExpMult + parsedOutputs.Deletions*deletionsExpMult
 }

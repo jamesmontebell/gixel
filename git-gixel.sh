@@ -35,7 +35,7 @@ commit_output="${commit_output//[[:space:]]/}"
 dropped=$(echo "$commit_output" | sed 's/..$//')
 
 # Run go TUI program with git commit output
-cd ./terminal
+cd /Users/jamesmontebell/Github/gixel/terminal
 go run terminal.go types.go utils.go $dropped
 
 exit 0

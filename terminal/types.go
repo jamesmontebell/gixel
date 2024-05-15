@@ -1,6 +1,6 @@
 package main
 
-type Outputs struct {
+type ParsedOutputs struct {
 	Changes   int
 	Inserts   int
 	Deletions int

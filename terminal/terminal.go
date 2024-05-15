@@ -12,7 +12,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	var output Outputs
+	var output ParsedOutputs
 	var args string
 
 	// Save arguements into a variable
@@ -42,4 +42,8 @@ func main() {
 	output.Deletions = deletions
 
 	fmt.Print(output)
+
+	res := calculateExp(output)
+
+	fmt.Println(res)
 }
