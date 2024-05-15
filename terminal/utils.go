@@ -8,9 +8,11 @@ import (
 )
 
 const (
-	filesExpMult     = 50
-	insertsExpMult   = 50
-	deletionsExpMult = 50
+	baseExp          = 70
+	filesExpMult     = 2
+	insertsExpMult   = 3
+	deletionsExpMult = 3
+	scaler           = 7
 )
 
 // Check if a string is a number
@@ -107,6 +109,9 @@ func findDeletions(s string) (int, error) {
 }
 
 // Take parsed git commit output numbers and calculate an experience amount
-func calculateExp(parsedOutputs ParsedOutputs) int {
-	return parsedOutputs.Changes*filesExpMult + parsedOutputs.Inserts*insertsExpMult + parsedOutputs.Deletions*deletionsExpMult
+func calculateExp(parsedOutputs ParsedOutputs) float32 {
+	combinedOutputs := parsedOutputs.Changes*filesExpMult + parsedOutputs.Deletions*deletionsExpMult + parsedOutputs.Inserts*insertsExpMult
+	num := baseExp * combinedOutputs
+	res := float32(num / scaler)
+	return res
 }
