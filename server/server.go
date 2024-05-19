@@ -19,6 +19,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("POST /newcommit", newCommit)
+	mux.HandleFunc("GET /characters/{userEmail}", getCharacter)
 
 	s := http.Server{
 		Addr:    ":1234",
