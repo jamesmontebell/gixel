@@ -10,7 +10,7 @@ import (
 const (
 	baseExp          = 64
 	filesExpMult     = 2
-	insertsExpMult   = 3
+	insertsExpMult   = 4
 	deletionsExpMult = 3
 	scaler           = 7
 )
