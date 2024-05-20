@@ -12,3 +12,11 @@ type Character struct {
 	Level      int    `json:"level"`
 	Experience int    `json:"experience"`
 }
+
+type CalculateLevelTestCases []struct {
+	GainedExperience int
+	CurrentLevel     int
+	CurrentExp       int
+	ExpectedLevel    int
+	ExpectedExp      int
+}

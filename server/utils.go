@@ -1,6 +1,9 @@
 package main
 
-import "errors"
+import (
+	"errors"
+	"math"
+)
 
 func calculateLevel(e Experience) (int, int, error) {
 
@@ -14,12 +17,12 @@ func calculateLevel(e Experience) (int, int, error) {
 		return 0, 0, errors.New("error getLevel")
 	}
 
-	exp = exp + e.Exp
-	experienceNeeded := (4*level ^ 3) / 5
+	experienceNeeded := (4.0 * math.Pow(float64(level), 3.0)) / 5.0
+	experienceNeeded = math.RoundToEven(experienceNeeded)
 
-	for exp >= experienceNeeded {
+	for float64(exp) >= experienceNeeded {
 		level++
-		exp = exp - experienceNeeded
+		exp = exp - int(experienceNeeded)
 	}
 
 	return exp, level, nil
@@ -43,4 +46,18 @@ func getLevel(userEmail string) (int, error) {
 	}
 
 	return level, nil
+}
+
+func calculateLevelTest(gained int, exp int, level int) (int, int) {
+	exp = exp + gained
+
+	experienceNeeded := (4.0 * math.Pow(float64(level), 3.0)) / 5.0
+	experienceNeeded = math.RoundToEven(experienceNeeded)
+
+	for float64(exp) >= experienceNeeded {
+		level++
+		exp = exp - int(experienceNeeded)
+	}
+
+	return exp, level
 }
