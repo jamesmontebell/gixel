@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	baseExp          = 70
+	baseExp          = 64
 	filesExpMult     = 2
 	insertsExpMult   = 3
 	deletionsExpMult = 3
