@@ -1,7 +1,8 @@
-package server
+package main
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	_ "modernc.org/sqlite"
@@ -26,6 +27,7 @@ func main() {
 		Handler: mux,
 	}
 
+	fmt.Println("Server is listening!")
 	panic(s.ListenAndServe())
 }
 

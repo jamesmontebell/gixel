@@ -1,4 +1,4 @@
-package server
+package main
 
 type Experience struct {
 	UserEmail string `json:"userEmail"`
@@ -6,9 +6,9 @@ type Experience struct {
 }
 
 type Character struct {
-	User_id    int
-	User_email string
-	Name       string
-	Level      int
-	Experience int
+	User_id    int    `json:"userId"`
+	User_email string `json:"userEmail"`
+	Name       string `json:"name"`
+	Level      int    `json:"level"`
+	Experience int    `json:"experience"`
 }

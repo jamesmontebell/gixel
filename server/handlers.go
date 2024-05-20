@@ -1,7 +1,8 @@
-package server
+package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -34,11 +35,20 @@ func newCommit(w http.ResponseWriter, r *http.Request) {
 
 func getCharacter(w http.ResponseWriter, r *http.Request) {
 	userEmail := r.PathValue("userEmail")
+	fmt.Println(userEmail)
 	var character Character
 
-	err := dbConnection.QueryRow("SELECT * FROM Character WHERE user_email=?", userEmail).Scan(&character)
+	err := dbConnection.QueryRow("SELECT user_id, user_email, name, level, experience FROM Character WHERE user_email = ?", userEmail).Scan(&character.User_id, &character.User_email, &character.Name, &character.Level, &character.Experience)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	jsonResult, err := json.Marshal(character)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(jsonResult)
 }
