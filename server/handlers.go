@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+// API endpoint that reads a new commit created by users, calculates the characters
+// new level/experience and updates the database
 func newCommit(w http.ResponseWriter, r *http.Request) {
 	var e Experience
 	err := json.NewDecoder(r.Body).Decode(&e)
@@ -33,6 +35,7 @@ func newCommit(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
+// API endpoint that returns a users character from the database
 func getCharacter(w http.ResponseWriter, r *http.Request) {
 	userEmail := r.PathValue("userEmail")
 	fmt.Println(userEmail)

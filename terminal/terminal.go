@@ -21,19 +21,19 @@ func main() {
 	// Save the number of changes made into a variable
 	changes, err := findFilesChanged(args)
 	if err != nil {
-		fmt.Println("Error occurred:", err)
+		fmt.Println(err)
 	}
 
 	// Save the number of insertions made into a variable
 	insertions, err := findInsertions(args)
 	if err != nil {
-		fmt.Println("Error occurred:", err)
+		fmt.Println(err)
 	}
 
 	// Save the number of deletions made into a variable
 	deletions, err := findDeletions(args)
 	if err != nil {
-		fmt.Println("Error occurred:", err)
+		fmt.Println(err)
 	}
 
 	// Add these variables into Output object

@@ -5,6 +5,8 @@ import (
 	"math"
 )
 
+// Retrieves a users current level and experience then calculates new level based on
+// the current amount of experience and gained experiences
 func calculateLevel(e Experience) (int, int, error) {
 
 	exp, err := getExperience(e.UserEmail)
@@ -28,6 +30,7 @@ func calculateLevel(e Experience) (int, int, error) {
 	return exp, level, nil
 }
 
+// Retrieves and returns a character's current experience
 func getExperience(userEmail string) (int, error) {
 	var exp int
 	err := dbConnection.QueryRow("SELECT experience FROM Character WHERE user_email=?", userEmail).Scan(&exp)
@@ -38,6 +41,7 @@ func getExperience(userEmail string) (int, error) {
 	return exp, nil
 }
 
+// Retrieves and returns a character's current level
 func getLevel(userEmail string) (int, error) {
 	var level int
 	err := dbConnection.QueryRow("SELECT level FROM Character WHERE user_email=?", userEmail).Scan(&level)
@@ -48,6 +52,7 @@ func getLevel(userEmail string) (int, error) {
 	return level, nil
 }
 
+// Test function to test experience gained/new level algorithm
 func calculateLevelTest(gained int, exp int, level int) (int, int) {
 	exp = exp + gained
 

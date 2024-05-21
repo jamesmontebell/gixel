@@ -31,6 +31,7 @@ func main() {
 	panic(s.ListenAndServe())
 }
 
+// Connect to SQLite database helper function
 func Connect(path string) (*sql.DB, error) {
 	conn, err := sql.Open("sqlite", ("file:" + path))
 	if err != nil {
