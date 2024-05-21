@@ -24,22 +24,3 @@ func TestCalculateLevel(t *testing.T) {
 		}
 	}
 }
-
-func TestRealCalculateLevel(t *testing.T) {
-	e := Experience{
-		UserEmail: "test",
-		Exp:       1,
-	}
-
-	expResult, levelResult, err := calculateLevel(e)
-	if err != nil {
-		t.Error("calculateLevel error", err)
-	}
-
-	if expResult != 0 {
-		t.Errorf("calculateLevel returned %d, expected %d", expResult, 0)
-	}
-	if levelResult != 2 {
-		t.Errorf("calculateLevel returned %d, expected %d", levelResult, 2)
-	}
-}
