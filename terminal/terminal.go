@@ -1,8 +1,13 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
+	"os/exec"
+	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -45,9 +50,39 @@ func main() {
 
 	fmt.Print(output)
 
-	res := calculateExp(output)
+	exp := calculateExp(output)
 
-	fmt.Println(res)
+	fmt.Println(exp)
+
+	cmd := exec.Command("git", "config", "user.email")
+	var outBuffer bytes.Buffer
+	cmd.Stdout = &outBuffer
+	err = cmd.Run()
+	if err != nil {
+		panic(err)
+	}
+	email := outBuffer.String()
+	email = email[:len(email)-1]
+
+	var newExp Experience
+	newExp.Exp = int(exp)
+	newExp.UserEmail = email
+
+	jsonBytes, err := json.Marshal(newExp)
+	if err != nil {
+		panic(err)
+	}
+	jsonString := string(jsonBytes)
+	res, err := http.Post("http://localhost:1234/newcommit", "application/json", strings.NewReader(jsonString))
+	if err != nil {
+		panic(err)
+	}
+
+	if res.StatusCode == 201 {
+		fmt.Println("Successful Experience Upload!")
+	} else {
+		fmt.Println("Failed to save to database!")
+	}
 
 	p := tea.NewProgram(model{count: 0})
 	if _, err := p.Run(); err != nil {

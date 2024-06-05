@@ -10,3 +10,8 @@ type TestCases []struct {
 	Input    string
 	Expected int
 }
+
+type Experience struct {
+	UserEmail string `json:"userEmail"`
+	Exp       int    `json:"experience"`
+}
