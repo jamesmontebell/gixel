@@ -23,6 +23,7 @@ func newCommit(w http.ResponseWriter, r *http.Request) {
 	}
 
 	exp, level, err := calculateLevel(e)
+	fmt.Println(exp, level, e.Exp)
 	if err != nil {
 		http.Error(w, "missing field", http.StatusInternalServerError)
 	}
@@ -32,7 +33,6 @@ func newCommit(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	fmt.Println("success")
 	w.WriteHeader(http.StatusCreated)
 }
 

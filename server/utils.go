@@ -8,7 +8,6 @@ import (
 // Retrieves a users current level and experience then calculates new level based on
 // the current amount of experience and gained experiences
 func calculateLevel(e Experience) (int, int, error) {
-
 	exp, err := getExperience(e.UserEmail)
 	if err != nil {
 		return 0, 0, errors.New("error getExperience")
@@ -19,12 +18,18 @@ func calculateLevel(e Experience) (int, int, error) {
 		return 0, 0, errors.New("error getLevel")
 	}
 
-	experienceNeeded := (4.0 * math.Pow(float64(level), 3.0)) / 5.0
-	experienceNeeded = math.RoundToEven(experienceNeeded)
+	exp += e.Exp
 
-	for float64(exp) >= experienceNeeded {
+	calculateExperienceNeeded := func(level int) int {
+		return int(math.RoundToEven((4.0 * math.Pow(float64(level), 3.0)) / 50.0))
+	}
+
+	experienceNeeded := calculateExperienceNeeded(level)
+
+	for float64(exp) >= float64(experienceNeeded) {
+		exp -= experienceNeeded
 		level++
-		exp = exp - int(experienceNeeded)
+		experienceNeeded = calculateExperienceNeeded(level)
 	}
 
 	return exp, level, nil
@@ -56,7 +61,7 @@ func getLevel(userEmail string) (int, error) {
 func calculateLevelTest(gained int, exp int, level int) (int, int) {
 	exp = exp + gained
 
-	experienceNeeded := (4.0 * math.Pow(float64(level), 3.0)) / 5.0
+	experienceNeeded := (4.0 * math.Pow(float64(level), 3.0)) / 50.0
 	experienceNeeded = math.RoundToEven(experienceNeeded)
 
 	for float64(exp) >= experienceNeeded {

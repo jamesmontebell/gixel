@@ -72,6 +72,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	jsonString := string(jsonBytes)
 	res, err := http.Post("http://localhost:1234/newcommit", "application/json", strings.NewReader(jsonString))
 	if err != nil {
