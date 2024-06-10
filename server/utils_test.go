@@ -6,12 +6,20 @@ import (
 
 func TestCalculateLevel(t *testing.T) {
 	testCases := CalculateLevelTestCases{
-		{100, 1, 0, 101, 0},
-		{100, 5, 0, 6, 0},
-		{1, 100, 0, 100, 1},
-		{1, 100, 799999, 101, 0},
-		{0, 100, 799999, 100, 799999},
-		{1, 100, 799998, 100, 799999},
+		{
+			GainedExperience: 10,
+			CurrentLevel:     1,
+			CurrentExp:       0,
+			ExpectedLevel:    3,
+			ExpectedExp:      6,
+		},
+		{
+			GainedExperience: 20,
+			CurrentLevel:     2,
+			CurrentExp:       2,
+			ExpectedLevel:    4,
+			ExpectedExp:      9,
+		},
 	}
 
 	for _, tc := range testCases {

@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"math"
 )
 
 // Retrieves a users current level and experience then calculates new level based on
@@ -21,12 +20,16 @@ func calculateLevel(e Experience) (int, int, error) {
 	exp += e.Exp
 
 	calculateExperienceNeeded := func(level int) int {
-		return int(math.RoundToEven((4.0 * math.Pow(float64(level), 3.0)) / 50.0))
+		res := ((4 * (level * level * level)) / 10)
+		if res < 1 {
+			return 1
+		}
+		return res
 	}
 
 	experienceNeeded := calculateExperienceNeeded(level)
 
-	for float64(exp) >= float64(experienceNeeded) {
+	for exp >= experienceNeeded {
 		exp -= experienceNeeded
 		level++
 		experienceNeeded = calculateExperienceNeeded(level)
@@ -59,14 +62,22 @@ func getLevel(userEmail string) (int, error) {
 
 // Test function to test experience gained/new level algorithm
 func calculateLevelTest(gained int, exp int, level int) (int, int) {
-	exp = exp + gained
+	exp += gained
 
-	experienceNeeded := (4.0 * math.Pow(float64(level), 3.0)) / 50.0
-	experienceNeeded = math.RoundToEven(experienceNeeded)
+	calculateExperienceNeeded := func(level int) int {
+		res := ((4 * (level * level * level)) / 10)
+		if res < 1 {
+			return 1
+		}
+		return res
+	}
 
-	for float64(exp) >= experienceNeeded {
+	experienceNeeded := calculateExperienceNeeded(level)
+
+	for exp >= experienceNeeded {
+		exp -= experienceNeeded
 		level++
-		exp = exp - int(experienceNeeded)
+		experienceNeeded = calculateExperienceNeeded(level)
 	}
 
 	return exp, level
