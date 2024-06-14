@@ -9,7 +9,7 @@ import (
 
 var dbConnection *sql.DB
 
-func StartServer() *http.Server {
+func SetupServer(db *sql.DB) *http.Server {
 	mux := http.NewServeMux()
 	mux.HandleFunc("POST /newcommit", newCommit)
 	mux.HandleFunc("GET /characters/{userEmail}", getCharacter)
@@ -19,6 +19,7 @@ func StartServer() *http.Server {
 		Handler: mux,
 	}
 
+	dbConnection = db
 	return &s
 }
 
@@ -29,7 +30,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	panic(StartServer().ListenAndServe())
+	panic(SetupServer(dbConnection).ListenAndServe())
 }
 
 // Connect to SQLite database helper function
