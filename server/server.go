@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 
 	_ "modernc.org/sqlite"
@@ -10,14 +9,7 @@ import (
 
 var dbConnection *sql.DB
 
-func main() {
-
-	var err error
-	dbConnection, err = Connect("./database.db")
-	if err != nil {
-		panic(err)
-	}
-
+func StartServer() *http.Server {
 	mux := http.NewServeMux()
 	mux.HandleFunc("POST /newcommit", newCommit)
 	mux.HandleFunc("GET /characters/{userEmail}", getCharacter)
@@ -27,8 +19,17 @@ func main() {
 		Handler: mux,
 	}
 
-	fmt.Println("Server is listening!")
-	panic(s.ListenAndServe())
+	return &s
+}
+
+func main() {
+
+	var err error
+	dbConnection, err = Connect("./database.db")
+	if err != nil {
+		panic(err)
+	}
+	panic(StartServer().ListenAndServe())
 }
 
 // Connect to SQLite database helper function

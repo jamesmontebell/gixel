@@ -1,5 +1,7 @@
 package main
 
+import "io"
+
 type Experience struct {
 	UserEmail string `json:"userEmail"`
 	Exp       int    `json:"experience"`
@@ -19,4 +21,11 @@ type CalculateLevelTestCases []struct {
 	CurrentExp       int
 	ExpectedLevel    int
 	ExpectedExp      int
+}
+
+type RequestTest struct {
+	Method string
+	Path   string
+	Body   io.Reader
+	Code   int
 }
