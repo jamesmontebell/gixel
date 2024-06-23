@@ -2,10 +2,12 @@ module gixel
 
 go 1.22.3
 
-require modernc.org/sqlite v1.29.10
+require (
+	github.com/charmbracelet/bubbletea v0.26.4
+	modernc.org/sqlite v1.29.10
+)
 
 require (
-	github.com/charmbracelet/bubbletea v0.26.4 // indirect
 	github.com/charmbracelet/x/ansi v0.1.2 // indirect
 	github.com/charmbracelet/x/input v0.1.0 // indirect
 	github.com/charmbracelet/x/term v0.1.1 // indirect
