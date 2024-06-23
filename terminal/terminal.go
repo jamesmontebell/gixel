@@ -48,11 +48,11 @@ func main() {
 	output.Inserts = insertions
 	output.Deletions = deletions
 
-	fmt.Print(output)
+	// fmt.Print(output)
 
 	exp := calculateExp(output)
 
-	fmt.Println(exp)
+	// fmt.Println(exp)
 
 	cmd := exec.Command("git", "config", "user.email")
 	var outBuffer bytes.Buffer
