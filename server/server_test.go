@@ -9,7 +9,7 @@ import (
 
 var RequestTests = []RequestTest{
 	{Method: "GET", Path: "/characters/test", Body: nil, Code: http.StatusOK},
-	{Method: "POST", Path: "/newCommit", Body: strings.NewReader("{\"userEmail\":\"test\",\"experience\":123}"), Code: http.StatusCreated},
+	{Method: "POST", Path: "/newcommit", Body: strings.NewReader(`{"userEmail":"test","experience":123}`), Code: http.StatusCreated},
 }
 
 func TestRoutes(t *testing.T) {

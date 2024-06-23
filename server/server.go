@@ -11,8 +11,8 @@ var dbConnection *sql.DB
 
 func SetupServer(db *sql.DB) *http.Server {
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /newcommit", newCommit)
-	mux.HandleFunc("GET /characters/{userEmail}", getCharacter)
+	mux.HandleFunc("/newcommit", newCommit)
+	mux.HandleFunc("/characters/{userEmail}", getCharacter)
 
 	s := http.Server{
 		Addr:    ":1234",
