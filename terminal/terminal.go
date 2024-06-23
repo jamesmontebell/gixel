@@ -80,10 +80,27 @@ func main() {
 	}
 
 	if res.StatusCode == 201 {
-		fmt.Println("Successful Experience Upload!")
+		fmt.Println("You've gained ", exp, " experience!")
 	} else {
-		fmt.Println("Failed to save to database!")
+		panic("Failed to save to database!")
 	}
+
+	res, err = http.Get("http://localhost:1234/characters/" + email)
+	if err != nil {
+		panic(err)
+	}
+
+	if res.StatusCode != 200 {
+		panic("Failed to pull from database!")
+	}
+
+	var character Character
+	decoder := json.NewDecoder(res.Body)
+	if err := decoder.Decode(&character); err != nil {
+		panic(err)
+	}
+
+	fmt.Println(character.Name, "- Level: ", character.Level, " Experience: ", character.Experience)
 
 	p := tea.NewProgram(model{count: 0})
 	if _, err := p.Run(); err != nil {
