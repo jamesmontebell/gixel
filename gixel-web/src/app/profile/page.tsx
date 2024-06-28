@@ -1,6 +1,6 @@
 import React from "react";
 
-const Home = () => {
+const Profile = () => {
   return (
     <div>
       <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
@@ -22,4 +22,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Profile;
